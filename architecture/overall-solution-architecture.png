@@ -1,0 +1,88 @@
+## Solution Architecture
+
+The AWS Enterprise SaaS Platform follows a multi-tier, highly available architecture designed using AWS best practices. The platform is built incrementally, with each phase introducing additional cloud services and infrastructure components to simulate a production-ready SaaS environment.
+
+### High-Level Architecture
+
+```
+                                        Internet
+                                            │
+                                            │
+                                   Amazon Route 53
+                                            │
+                                            ▼
+                             Application Load Balancer
+                          (Public Subnets - Multi AZ)
+                                            │
+                     ┌──────────────────────┴──────────────────────┐
+                     │                                             │
+                     ▼                                             ▼
+           EC2 Instance (Private AZ-1)                 EC2 Instance (Private AZ-2)
+                  Employee App                               Employee App
+                     │                                             │
+                     └──────────────────────┬──────────────────────┘
+                                            │
+                                            ▼
+                                 Auto Scaling Group (ASG)
+                                            │
+                                            ▼
+                                Amazon RDS (Multi-AZ)
+                                            │
+                                            ▼
+                                  Application Database
+
+                    ▲
+                    │
+        AWS Systems Manager (Session Manager)
+                    │
+                    ▼
+              Secure Instance Access
+
+                    ▲
+                    │
+        Amazon CloudWatch & CloudWatch Agent
+                    │
+                    ▼
+          Metrics • Logs • Monitoring • Alarms
+```
+
+### Networking Architecture
+
+- Amazon VPC spanning multiple Availability Zones.
+- Public subnets hosting internet-facing resources.
+- Private subnets hosting application servers and databases.
+- Internet Gateway providing public internet connectivity.
+- NAT Gateway enabling outbound internet access for private resources.
+- Route Tables controlling traffic flow between public and private networks.
+- Security Groups and Network ACLs enforcing network security.
+
+### Compute Layer
+
+The application layer is hosted on Amazon EC2 instances deployed inside private subnets. Incoming requests are distributed by an Application Load Balancer, while an Auto Scaling Group automatically maintains application availability by replacing unhealthy instances and scaling based on demand.
+
+### Database Layer
+
+Amazon RDS provides a managed relational database backend for the Employee Management Platform. The database resides within private subnets, ensuring it is not directly accessible from the internet.
+
+### Monitoring & Management
+
+The infrastructure is monitored using Amazon CloudWatch and the CloudWatch Agent, providing metrics, logs, and operational visibility. AWS Systems Manager Session Manager enables secure administration of EC2 instances without requiring SSH access.
+
+### Infrastructure Automation
+
+As the project progresses, the complete infrastructure will be provisioned using Terraform, enabling repeatable deployments through Infrastructure as Code (IaC).
+
+### Containerization & CI/CD
+
+Future phases will containerize the application using Docker and implement automated CI/CD pipelines to streamline application deployment and infrastructure updates.
+
+### Architecture Principles
+
+- High Availability
+- Fault Tolerance
+- Scalability
+- Security by Design
+- Infrastructure as Code
+- Cost Optimization
+- Operational Excellence
+- Automated Deployment

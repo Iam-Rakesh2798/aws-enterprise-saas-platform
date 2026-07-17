@@ -1,0 +1,42 @@
+                                 Internet
+                                     │
+                                     ▼
+                             Internet Gateway
+                                     │
+                                     ▼
+                    Application Load Balancer (Public)
+                    ┌──────────────────────────────┐
+                    │         Public Subnets       │
+                    └──────────────────────────────┘
+                             │             │
+                             ▼             ▼
+                  Private EC2-1      Private EC2-2
+             Employee Management  Employee Management
+                    │                     │
+                    └──────────┬──────────┘
+                               │
+                       Target Group (Healthy)
+
+──────────────────────────────────────────────────────────────
+
+Amazon VPC
+
+├── Public Subnet AZ-1
+│      └── ALB
+│
+├── Public Subnet AZ-2
+│
+├── Private App Subnet AZ-1
+│      └── EC2 Instance
+│
+├── Private App Subnet AZ-2
+│      └── EC2 Instance
+│
+├── Private DB Subnet AZ-1
+│
+└── Private DB Subnet AZ-2
+
+CloudWatch Agent
+        ▲
+        │
+AWS Systems Manager

@@ -1,0 +1,44 @@
+                                 Internet
+                                     │
+                                     ▼
+                               Route 53 (Future)
+                                     │
+                                     ▼
+                    Application Load Balancer (ALB)
+                                     │
+                      ┌──────────────┴──────────────┐
+                      │                             │
+                      ▼                             ▼
+          EC2 Instance (AZ-1)            EC2 Instance (AZ-2)
+              Auto Scaling                   Auto Scaling
+                      │                             │
+                      └──────────────┬──────────────┘
+                                     │
+                           Auto Scaling Group
+                           Min:0  Max:4  Desired:2
+
+──────────────────────────────────────────────────────────────
+
+Amazon VPC
+
+Public Subnets
+      │
+      ▼
+Application Load Balancer
+
+Private App Subnets
+      │
+      ▼
+Auto Scaling EC2 Instances
+
+Private DB Subnets
+      │
+      ▼
+Reserved for RDS
+
+CloudWatch Agent
+        ▲
+        │
+CloudWatch
+
+AWS Systems Manager
