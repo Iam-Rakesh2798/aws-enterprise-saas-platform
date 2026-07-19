@@ -1,0 +1,84 @@
+                                Internet
+                                    │
+                                    ▼
+                            Route 53 (Future)
+                                    │
+                                    ▼
+                     Application Load Balancer (ALB)
+                                    │
+                     ┌──────────────┴──────────────┐
+                     │                             │
+                     ▼                             ▼
+          EC2 Instance (AZ-1)             EC2 Instance (AZ-2)
+             Auto Scaling                    Auto Scaling
+                     │                             │
+                     └──────────────┬──────────────┘
+                                    │
+                          Auto Scaling Group
+                    Min:2  Max:4  Desired:2
+                                    │
+                           employee-app-sg
+                                    │
+                           PostgreSQL (5432)
+                                    │
+                            employee-db-sg
+                                    │
+                                    ▼
+                      Amazon RDS PostgreSQL
+                    Single-AZ | Private Access
+                                    │
+                         DB Subnet Group
+                    ┌─────────────┴─────────────┐
+                    │                           │
+                    ▼                           ▼
+        Private DB Subnet (AZ-1)    Private DB Subnet (AZ-2)
+
+────────────────────────────────────────────────────────────────────
+
+Amazon VPC
+
+Public Subnets
+      │
+      ▼
+Application Load Balancer
+
+Private App Subnets
+      │
+      ▼
+Auto Scaling EC2 Instances
+
+Private DB Subnets
+      │
+      ▼
+Amazon RDS PostgreSQL
+
+Security Groups
+
+employee-app-sg
+        │
+Allows PostgreSQL (5432)
+        ▼
+employee-db-sg
+
+AWS KMS
+      │
+      ▼
+Encrypted RDS Storage
+
+CloudWatch
+      ▲
+      │
+Performance Insights
+      │
+Amazon RDS
+
+AWS Systems Manager
+        │
+        ▼
+EC2 Session Manager
+        │
+        ▼
+PostgreSQL Client (psql)
+        │
+        ▼
+Amazon RDS PostgreSQL
