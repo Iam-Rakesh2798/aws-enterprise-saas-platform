@@ -1,0 +1,58 @@
+                                 Internet
+                                     │
+                                     ▼
+                         Application Load Balancer (ALB)
+                                     │
+                      ┌──────────────┴──────────────┐
+                      │                             │
+                      ▼                             ▼
+          EC2 Instance (AZ-1)            EC2 Instance (AZ-2)
+              Auto Scaling                   Auto Scaling
+                      │                             │
+                      └──────────────┬──────────────┘
+                                     │
+                             IAM Role (EC2-SSM-Role)
+                                     │
+                                     ▼
+                    Amazon S3 Bucket (Private Storage)
+                                     │
+      ┌──────────────────────────────┼─────────────────────────────┐
+      │                              │                             │
+      ▼                              ▼                             ▼
+employee-profile-images/     employee-resumes/       employee-documents/
+                                     │
+                                     ▼
+                           application-logs/
+                                     │
+                                     ▼
+          Versioning • SSE-S3 Encryption • Lifecycle Rules
+                                     │
+                                     ▼
+                          Pre-Signed URL (Temporary Access)
+
+──────────────────────────────────────────────────────────────────────────────
+
+Amazon VPC
+
+Public Subnets
+      │
+      ▼
+Application Load Balancer
+
+Private App Subnets
+      │
+      ▼
+Auto Scaling EC2 Instances
+      │
+      ▼
+IAM Role
+      │
+      ▼
+Amazon S3 Bucket
+
+CloudWatch Agent
+        ▲
+        │
+CloudWatch
+
+AWS Systems Manager
