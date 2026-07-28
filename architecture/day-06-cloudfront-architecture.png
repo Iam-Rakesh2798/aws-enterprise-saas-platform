@@ -1,0 +1,50 @@
+                           Internet
+                               │
+                               ▼
+                     Amazon CloudFront
+                     (Global CDN)
+                               │
+                ┌──────────────┴──────────────┐
+                │                             │
+                ▼                             ▼
+   Application Load Balancer            Amazon S3 Bucket
+         (Dynamic Content)            (Static Content)
+                │                             │
+                ▼                             │
+        Auto Scaling Group                    │
+                │                             │
+         ┌──────┴──────┐                      │
+         ▼             ▼                      │
+   EC2 Instance 1   EC2 Instance 2            │
+                │                             │
+                └──────────────┬──────────────┘
+                               │
+                               ▼
+                    Amazon RDS PostgreSQL
+
+──────────────────────────────────────────────────────────────
+
+CloudFront Configuration
+
+Origins
+   │
+   ├── ALB
+   └── Amazon S3
+
+Behaviors
+   │
+   ├── *              → ALB
+   └── /images/*      → Amazon S3
+
+Security
+
+Origin Access Control (OAC)
+        │
+        ▼
+Private Amazon S3 Bucket
+
+Compression Enabled
+
+CachingOptimized Policy
+
+HTTP/2 & HTTP/3 Enabled
