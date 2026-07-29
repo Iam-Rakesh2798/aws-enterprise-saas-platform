@@ -1,0 +1,23 @@
+                                Internet
+                                    │
+                        AWS Shield Standard
+                    (Layer 3 & 4 DDoS Protection)
+                                    │
+                              AWS WAF Web ACL
+                  (Managed Rules + Rate Limiting)
+                                    │
+                          Amazon CloudFront
+                           /                 \
+                          /                   \
+               S3 Origin                     ALB Origin
+        (Static Images/Files)          (Dynamic Application)
+                │                              │
+                │                      Auto Scaling Group
+                │                       ┌───────────────┐
+                │                       │               │
+                │                 EC2 App 1      EC2 App 2
+                │                       │
+                └───────────────────────┴───────────────┐
+                                                        │
+                                             Amazon RDS PostgreSQL
+                                                (Private Subnets)
