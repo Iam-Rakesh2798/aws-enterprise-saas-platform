@@ -1,0 +1,68 @@
+                           AWS Account
+                                │
+      ┌──────────────┬──────────┴─────────────┬──────────────┐
+      │              │                        │              │
+      ▼              ▼                        ▼              ▼
+ Developers      DevOps                    DBA          Security
+ IAM Group      IAM Group               IAM Group      IAM Group
+      │              │                        │              │
+      ▼              ▼                        ▼              ▼
+Developer      DevOps User               DBA User      Security User
+   User
+      │              │                        │              │
+      └──────────────┴──────────┬─────────────┘
+                                │
+                                ▼
+                  Customer Managed Policies
+                                │
+                                ▼
+                   Permission Boundary
+                     (Developer User)
+                                │
+                                ▼
+                        IAM Role
+                  (S3ReadOnlyRole)
+                                │
+                                ▼
+          AWS STS (Temporary Credentials)
+                                │
+                                ▼
+                    Amazon S3 ReadOnly Access
+
+──────────────────────────────────────────────────────────────
+
+IAM Components
+
+IAM Groups
+   │
+   ├── Developers
+   ├── DevOps
+   ├── DBA
+   └── Security
+
+Policies
+   │
+   ├── DeveloperPolicy
+   ├── DevOpsPolicy
+   ├── DBAPolicy
+   └── SecurityPolicy
+
+Security
+
+Permission Boundary
+        │
+        ▼
+MaximumAllowedPermissions
+
+IAM Role
+        │
+        ▼
+S3ReadOnlyRole
+
+Authentication
+
+Multi-Factor Authentication (MFA)
+
+Security Analysis
+
+IAM Access Analyzer

@@ -1,4 +1,4 @@
-# Day 8 - AWS WAF and AWS Shield Standard
+# Day 7 - AWS WAF and AWS Shield Standard
 
 ## Objective
 
