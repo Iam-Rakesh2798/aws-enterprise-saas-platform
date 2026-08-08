@@ -1,0 +1,76 @@
+                             Internet
+                                 │
+                                 ▼
+                     Application Load Balancer (ALB)
+                                 │
+                  ┌──────────────┴──────────────┐
+                  │                             │
+                  ▼                             ▼
+      EC2 Instance (AZ-1)            EC2 Instance (AZ-2)
+          Auto Scaling                   Auto Scaling
+                  │                             │
+                  └──────────────┬──────────────┘
+                                 │
+                         IAM Role (EC2-SSM-Role)
+                                 │
+                                 ▼
+                     CloudWatch Agent
+                                 │
+              ┌──────────────────┼──────────────────┐
+              │                  │                  │
+              ▼                  ▼                  ▼
+          Memory             Disk Metrics       Nginx Logs
+          Metrics                                │
+                                                  │
+                                  ┌───────────────┴───────────────┐
+                                  │                               │
+                                  ▼                               ▼
+                           access.log                         error.log
+                                  │                               │
+                                  └───────────────┬───────────────┘
+                                                  │
+                                                  ▼
+                                      Amazon CloudWatch
+                                  ┌──────────────┴──────────────┐
+                                  │                             │
+                                  ▼                             ▼
+                            CloudWatch                    CloudWatch
+                              Metrics                        Logs
+                                  │
+                                  ▼
+                         CloudWatch Alarm
+                         High Memory > 80%
+                                  │
+                                  ▼
+                             Amazon SNS
+                                  │
+                                  ▼
+                           Email Notification
+
+──────────────────────────────────────────────────────────────────────────────
+
+Amazon VPC
+
+Public Subnets
+│
+▼
+Application Load Balancer
+
+Private App Subnets
+│
+▼
+Auto Scaling EC2 Instances
+│
+├── Nginx access.log
+├── Nginx error.log
+│
+└── CloudWatch Agent
+        │
+        ▼
+    CloudWatch
+
+AWS Systems Manager
+        │
+        ▼
+SSM Parameter Store
+/employee/cloudwatch-agent-config
